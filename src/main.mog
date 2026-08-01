@@ -1,2 +1,47 @@
-fn assert(condition bool, message str) void { if (!condition) error(message) }
-fn equal(actual any, expected any, message str) void { if (actual != expected) error(message) }
+fn fail(message str) void { error("test failure: " + message) }
+
+fn assert(condition bool, message str) void {
+    if (!condition) fail("assertion failed: " + message)
+}
+
+fn equal(actual any, expected any, message str) void {
+    if (actual != expected) {
+        fail(message + ": expected " + str(expected) + ", got " + str(actual))
+    }
+}
+
+fn notEqual(actual any, expected any, message str) void {
+    if (actual == expected) {
+        fail(message + ": expected values to differ, both were " + str(actual))
+    }
+}
+
+fn isTrue(actual bool, message str) void {
+    if (!actual) fail(message + ": expected true, got false")
+}
+
+fn isFalse(actual bool, message str) void {
+    if (actual) fail(message + ": expected false, got true")
+}
+
+fn isNull(actual any, message str) void {
+    if (actual != null) fail(message + ": expected null, got " + str(actual))
+}
+
+fn notNull(actual any, message str) void {
+    if (actual == null) fail(message + ": expected a non-null value")
+}
+
+fn approxEqual(actual f64, expected f64, tolerance f64, message str) void {
+    if (tolerance != tolerance || tolerance < 0.0) {
+        fail(message + ": tolerance must be a non-negative number")
+    }
+    if (actual != actual || expected != expected) {
+        fail(message + ": NaN values cannot be approximately equal")
+    }
+    var difference f64 = actual - expected
+    if (difference < 0.0) difference = -difference
+    if (difference > tolerance) {
+        fail(message + ": expected " + str(expected) + " +/- " + str(tolerance) + ", got " + str(actual))
+    }
+}
