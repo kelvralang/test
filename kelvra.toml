@@ -1,0 +1,13 @@
+kind = "source"
+module = "github.com/kelvralang/test"
+import_name = "test"
+namespace = "github"
+name = "test"
+version = "0.2.0"
+license = "GPL-3.0-only"
+kelvra_runtime = "^0.2.0"
+author = "Kelvra contributors"
+description = "Developer assertion helpers for Kelvra tests."
+repository = "https://github.com/kelvralang/test"
+entry = "src/main.kel"
+dependencies = []
